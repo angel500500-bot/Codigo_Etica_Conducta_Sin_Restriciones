@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="CODIGO_ETICA_CONDUCTA" version="2.0"
+  xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+  </metadata>
+  <organizations default="ORG_CURSO">
+    <organization identifier="ORG_CURSO">
+      <title>Código de Ética y Conducta</title>
+      <item identifier="ITEM_CURSO" identifierref="RES_CURSO" isvisible="true">
+        <title>Código de Ética y Conducta</title>
+        <adlcp:masteryscore>70</adlcp:masteryscore>
+      </item>
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="RES_CURSO" type="webcontent" adlcp:scormtype="sco" href="index.html">
+      <file href="index.html"/>
+      <file href="assets/audio/LEEME.txt"/>
+      <file href="assets/fonts/LICENSE-fraunces.txt"/>
+      <file href="assets/fonts/LICENSE-manrope.txt"/>
+      <file href="assets/fonts/fraunces-latin-500-normal.woff2"/>
+      <file href="assets/fonts/fraunces-latin-600-normal.woff2"/>
+      <file href="assets/fonts/manrope-latin-400-normal.woff2"/>
+      <file href="assets/fonts/manrope-latin-500-normal.woff2"/>
+      <file href="assets/fonts/manrope-latin-600-normal.woff2"/>
+      <file href="assets/fonts/manrope-latin-700-normal.woff2"/>
+      <file href="assets/fonts/manrope-latin-800-normal.woff2"/>
+      <file href="assets/img/caso1.jpg"/>
+      <file href="assets/img/caso4.jpg"/>
+      <file href="assets/img/certificado-fondo.png"/>
+      <file href="assets/img/equipo.jpg"/>
+      <file href="assets/img/ilustraciones/ejemplo-bienes-uso-personal.svg"/>
+      <file href="assets/img/ilustraciones/ejemplo-relacion-personal.svg"/>
+      <file href="assets/img/ilustraciones/ejemplo-soborno.svg"/>
+      <file href="assets/img/ilustraciones/ejemplo-transacciones-amanadas.svg"/>
+      <file href="assets/img/ilustraciones/principio-confidencialidad.svg"/>
+      <file href="assets/img/ilustraciones/principio-cumplimiento.svg"/>
+      <file href="assets/img/ilustraciones/principio-integridad.svg"/>
+      <file href="assets/img/ilustraciones/principio-profesionalismo.svg"/>
+      <file href="assets/img/ilustraciones/principio-respeto.svg"/>
+      <file href="assets/img/ilustraciones/relacion-ambiente-seguro.svg"/>
+      <file href="assets/img/ilustraciones/relacion-entorno-respetuoso.svg"/>
+      <file href="assets/img/ilustraciones/relacion-igualdad.svg"/>
+      <file href="assets/img/ilustraciones/relacion-libre-acoso.svg"/>
+      <file href="assets/img/ilustraciones/valor-compromiso.svg"/>
+      <file href="assets/img/ilustraciones/valor-excelencia.svg"/>
+      <file href="assets/img/ilustraciones/valor-perseverancia.svg"/>
+      <file href="assets/img/ilustraciones/valor-proactividad.svg"/>
+      <file href="assets/img/ilustraciones/valor-trabajo-equipo.svg"/>
+      <file href="assets/img/unidad.jpg"/>
+      <file href="content/01-inicio.js"/>
+      <file href="content/02-introduccion.js"/>
+      <file href="content/03-codigo.js"/>
+      <file href="content/04-cierre.js"/>
+      <file href="content/05-evaluacion.js"/>
+      <file href="content/preguntas.js"/>
+      <file href="css/base.css"/>
+      <file href="css/certificate.css"/>
+      <file href="css/components.css"/>
+      <file href="css/layout.css"/>
+      <file href="css/sections.css"/>
+      <file href="js/audio.js"/>
+      <file href="js/components.js"/>
+      <file href="js/config.js"/>
+      <file href="js/icons.js"/>
+      <file href="js/interactions.js"/>
+      <file href="js/main.js"/>
+      <file href="js/navigation.js"/>
+      <file href="js/principles.js"/>
+      <file href="js/progress.js"/>
+      <file href="js/quiz.js"/>
+      <file href="js/resources.js"/>
+      <file href="js/scorm.js"/>
+      <file href="js/sync-times.js"/>
+      <file href="js/sync.js"/>
+      <file href="js/toc.js"/>
+      <file href="js/values.js"/>
+    </resource>
+  </resources>
+</manifest>

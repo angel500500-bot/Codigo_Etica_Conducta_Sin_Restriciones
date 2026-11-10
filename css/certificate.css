@@ -1,0 +1,27 @@
+/* ============================================================
+   CERTIFICADO
+   Replica la plantilla de certificados de Chamilo
+   (fondo 1000 x 720 px = 264,58 x 190,5 mm).
+   ============================================================ */
+.certwrap{width:min(1000px,100%);max-height:100%;overflow:auto;background:#fff;border-radius:16px;padding:14px}
+.cert{position:relative;width:100%;aspect-ratio:1000/720;background:#fff url(../assets/img/certificado-fondo.png) no-repeat top left/100% 100%;font-family:Arial,Helvetica,sans-serif;text-align:center;container-type:inline-size;overflow:hidden}
+/* Medidas en cqw para que el certificado escale igual que la plantilla original de 1000 px */
+.cert .cin{padding:13cqw 8cqw 0}
+.cert .c-title{font-size:3.4cqw;font-weight:bold;letter-spacing:.6cqw;color:#2196d6}
+.cert .c-pre{font-size:1.5cqw;letter-spacing:.2cqw;color:#555;margin-top:5.5cqw}
+.cert .c-name{font-size:4.6cqw;font-weight:bold;letter-spacing:.3cqw;color:#2196d6;margin-top:1.8cqw;line-height:1.1}
+.cert .c-name[contenteditable]{outline:2px dashed #b9dcf3;outline-offset:4px;border-radius:4px}
+.cert .c-desc{font-size:1.6cqw;color:#444;line-height:1.6;margin-top:2.6cqw}
+.cert .c-date{font-size:1.4cqw;color:#777;margin-top:4cqw}
+.certbtns{display:flex;gap:10px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
+.certnote{font-size:12.5px;color:var(--muted);margin-right:auto;align-self:center}
+
+@media print{
+  @page{size:264.58mm 190.5mm;margin:0}
+  body *{visibility:hidden!important}
+  #certModal,#certModal *{visibility:visible!important}
+  #certModal{position:absolute;inset:0;background:#fff;display:block;padding:0}
+  .certwrap{width:264.58mm;max-height:none;padding:0;border-radius:0;overflow:visible}
+  .cert{width:264.58mm;height:190.5mm;aspect-ratio:auto;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .certbtns{display:none!important}
+}

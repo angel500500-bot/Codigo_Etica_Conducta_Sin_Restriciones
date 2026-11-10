@@ -1,0 +1,140 @@
+/* ============================================================
+   ESTRUCTURA: encabezado, menú, panel de contenido, escenario,
+   reproductor y navegación inferior.
+   ============================================================ */
+.app{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+.cprog{height:4px;background:#d7e0ee;flex:0 0 auto}
+.cprog>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--navy),var(--sky));transition:width .5s cubic-bezier(.2,.7,.2,1)}
+
+/* ---------- Encabezado: [☰] | Autoformación · Código de Ética y Conducta | secciones ---------- */
+.topmenu{display:flex;align-items:stretch;background:var(--card);border-bottom:1px solid var(--line);flex:0 0 auto;position:relative;z-index:5}
+.tocbtn{flex:0 0 auto;width:58px;border:none;border-right:1px solid var(--line);background:none;cursor:pointer;display:grid;place-items:center;color:var(--ink);transition:background .2s}
+.tocbtn:hover{background:#f4f7fc}
+.tocbtn svg{width:24px;height:24px}
+.tocbtn[aria-expanded="true"]{background:var(--theme);color:#fff}
+.brandmini{display:flex;flex-direction:column;justify-content:center;padding:8px 16px;border-right:1px solid var(--line);flex:0 0 auto;line-height:1.15}
+.brandmini small{font-size:9.5px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-weight:800}
+.brandmini b{font-size:13px;color:var(--ink)}
+.mitems{display:flex;flex:1;min-width:0}
+.mitem{flex:1;display:flex;align-items:center;justify-content:center;gap:9px;padding:10px;font-size:13px;line-height:1.15;text-align:left;font-weight:700;color:var(--muted);cursor:pointer;position:relative;border:none;border-right:1px solid var(--line);background:none;transition:color .2s,background .2s,opacity .2s;min-width:0}
+.mitem:last-child{border-right:none}
+.mabbr{display:none}
+/* Indicador circular: el contorno muestra el avance real de la sección */
+.ring{width:22px;height:22px;flex:0 0 auto;position:relative;display:grid;place-items:center}
+.ring>svg{position:absolute;inset:0;width:22px;height:22px;transform:rotate(-90deg)}
+.ring .rb{fill:none;stroke:#d5deeb;stroke-width:3}
+.ring .rp{fill:none;stroke:var(--am,var(--theme));stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset .6s cubic-bezier(.2,.7,.2,1)}
+.ring .rk{width:12px;height:12px;color:#fff;opacity:0;transition:opacity .2s;position:relative}
+.done>.ring{background:var(--good);border-radius:50%}
+.done>.ring .rb,.done>.ring .rp{opacity:0}
+.done>.ring .rk{opacity:1}
+/* Estados del menú superior */
+.mitem.pending{opacity:.62}
+.mitem.next{color:var(--ink);opacity:1}
+.mitem.next .rb{stroke:var(--am);opacity:.45}
+.mitem.active{color:#fff;opacity:1}
+.mitem.active::before{content:"";position:absolute;inset:6px;border-radius:9px;background:var(--am);z-index:-1}
+.mitem.active .rb{stroke:rgba(255,255,255,.35);opacity:1}
+.mitem.active .rp{stroke:#fff}
+.mitem.active.done>.ring{background:#fff}
+.mitem.active.done .rk{color:var(--am)}
+.mitem.locked{cursor:not-allowed;color:#aeb9ca;opacity:.75}
+.mitem .lock{display:none;color:#aeb9ca}
+.mitem.locked .lock{display:inline-flex}
+.mitem:not(.locked):not(.active):hover{background:#f4f7fc;color:var(--ink);opacity:1}
+.band{height:8px;flex:0 0 auto;transition:background .35s}
+
+/* ---------- Panel lateral: tabla de contenido ---------- */
+.drawer-bg{position:fixed;inset:0;background:rgba(6,20,45,.45);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s;z-index:40}
+.drawer{position:fixed;top:0;left:0;bottom:0;width:min(400px,92vw);background:#fff;box-shadow:20px 0 60px -30px rgba(0,0,0,.5);transform:translateX(-102%);transition:transform .32s cubic-bezier(.2,.7,.2,1);z-index:41;display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.drawer.on+.drawer-bg,.drawer-bg.on{opacity:1;visibility:visible}
+.dhead{padding:18px 18px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.dhead h2{font-family:var(--display);font-weight:600;font-size:22px;margin:0}
+.dhead small{display:block;color:var(--muted);font-weight:700;font-size:12px;margin-top:2px}
+.dclose{margin-left:auto;width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;display:grid;place-items:center;color:var(--muted)}
+.dclose svg{width:18px;height:18px}
+.dprog{height:6px;border-radius:9px;background:#e3e9f2;overflow:hidden;margin:0 18px 6px}
+.dprog i{display:block;height:100%;background:linear-gradient(90deg,var(--navy),var(--sky));transition:width .4s}
+.dbody{flex:1;overflow:auto;padding:10px 12px 20px}
+.dlegend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:4px 18px 10px;font-size:11.5px;color:var(--muted);font-weight:700}
+.dlegend span{display:inline-flex;align-items:center;gap:6px}
+.dlegend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+
+/* ---------- Escenario y ajuste automático ---------- */
+.stage{flex:1 1 auto;position:relative;min-height:0}
+.scene{position:absolute;inset:0;overflow:hidden;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .38s,transform .38s}
+.scene.active{opacity:1;visibility:visible;transform:none}
+.fitwrap{width:100%;min-height:100%;transform-origin:top center;will-change:transform;padding:14px clamp(12px,2.4vw,28px) 16px;display:flex;flex-direction:column}
+.fitwrap>.card{flex:1;max-width:1180px;width:100%;margin:0 auto;display:flex;flex-direction:column}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.card>.pad{flex:1;display:flex;flex-direction:column;justify-content:center;padding:clamp(16px,2.2vw,28px) clamp(18px,2.6vw,36px)}
+.pad>.kicker{align-self:flex-start}
+
+/* ---------- Barra inferior ---------- */
+.bottom{flex:0 0 auto;background:var(--card);border-top:1px solid var(--line);z-index:6}
+.transcript{display:none;padding:11px clamp(14px,3vw,26px) 0;font-size:clamp(13px,1.4vw,15px);line-height:1.55;color:#33415c;max-height:84px;overflow:auto}
+.transcript.on{display:block}
+.transcript .w{border-radius:3px;padding:0 1px}
+.transcript .w.act{background:var(--theme);color:#fff}
+.transcript .tl{display:block;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.player{display:flex;align-items:center;gap:12px;padding:10px clamp(14px,3vw,26px)}
+.player.off{visibility:hidden}
+.pbtn{flex:0 0 auto;width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;background:var(--theme);color:#fff;display:grid;place-items:center;box-shadow:0 8px 18px -8px var(--theme);transition:transform .12s}
+.pbtn:hover{transform:scale(1.06)}
+.pbtn svg{width:19px;height:19px}
+.pbtn[disabled]{opacity:.5;cursor:default;box-shadow:none;transform:none}
+.srcbadge{flex:0 0 auto;font-size:10.5px;font-weight:800;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:3px 8px;letter-spacing:.04em}
+.srcbadge:empty{display:none}
+.lockbadge{display:none;align-items:center;gap:5px;color:var(--muted);font-size:11px;font-weight:700;flex:0 0 auto}
+.lockbadge.show{display:inline-flex}
+.lockbadge svg{width:14px;height:14px}
+.time{font-variant-numeric:tabular-nums;font-size:12px;font-weight:700;color:var(--muted);min-width:34px;text-align:center}
+/* Barra de progreso del audio: avance continuo (se actualiza en cada cuadro) */
+.seek{flex:1;height:7px;border-radius:99px;background:#dde6f3;position:relative;cursor:pointer;min-width:60px}
+.seek>i{position:absolute;left:0;top:0;bottom:0;width:100%;border-radius:99px;background:var(--theme);transform-origin:left center;transform:scaleX(0)}
+.seek .knob{position:absolute;top:50%;left:0;width:15px;height:15px;border-radius:50%;background:#fff;border:2px solid var(--theme);transform:translate(-50%,-50%);box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.seek .segmark{position:absolute;top:-2px;bottom:-2px;width:2px;background:#fff;border-radius:2px;opacity:.9}
+.seek.locked{cursor:not-allowed}
+.seek.locked .knob{border-color:#9fb0c9}
+.vol-wrap{display:flex;align-items:center;gap:7px;flex:0 0 auto}
+.volbtn{background:none;border:none;cursor:pointer;color:var(--muted);display:grid;place-items:center;padding:2px}
+.volbtn svg{width:19px;height:19px}
+.vol{width:76px;accent-color:var(--theme);cursor:pointer}
+.ccbtn{flex:0 0 auto;border:1.5px solid var(--line);background:#fff;color:var(--muted);font-weight:800;font-size:11px;border-radius:8px;padding:8px 11px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.15s}
+.ccbtn.on{background:var(--theme);border-color:var(--theme);color:#fff}
+.ccbtn svg{width:15px;height:15px}
+.navrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 clamp(14px,3vw,26px) 12px}
+.navrow .left{font-size:12px;color:var(--muted);font-weight:700}
+.hint{font-size:12px;color:var(--warn);font-weight:800;display:none;align-items:center;gap:6px}
+.hint.show{display:inline-flex}
+.hint svg{width:14px;height:14px}
+
+/* ---------- Ventanas ---------- */
+.modal{position:fixed;inset:0;background:rgba(6,20,45,.55);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+.modal.on{display:flex;animation:fadeIn .25s}
+.mbox{background:#fff;border-radius:20px;max-width:460px;width:100%;padding:28px;box-shadow:0 30px 60px -20px rgba(0,0,0,.5);text-align:center}
+.mbox .mi{width:60px;height:60px;border-radius:50%;background:var(--theme-soft);color:var(--theme);display:grid;place-items:center;margin:0 auto 14px}
+.mbox .mi svg{width:30px;height:30px}
+.mbox h3{font-family:var(--display);font-weight:600;font-size:24px;margin:0 0 8px}
+.mbox p{color:var(--muted);line-height:1.55;margin-bottom:20px}
+.mbox .mbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* ---------- Pantallas medianas y pequeñas ---------- */
+@media (max-width:1180px){
+  .brandmini{display:none}
+  .mitem .lbltxt{display:none}
+  .mitem .mabbr{display:inline}
+}
+@media (max-width:880px){
+  .mitem{gap:6px;padding:12px 4px;font-size:12px}
+  .vol-wrap,.srcbadge{display:none}
+  .player{gap:8px}
+}
+@media (max-width:520px){
+  .tocbtn{width:46px}
+  .mitem{padding:10px 2px;font-size:11px;flex-direction:column;gap:3px}
+  .mitem .lock{display:none!important}
+  .ring,.ring>svg{width:16px;height:16px}
+  .navrow .left{display:none}
+}

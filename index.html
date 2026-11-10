@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Código de Ética y Conducta · Autoformación</title>
+<!--
+  Autoformación «Código de Ética y Conducta» · Paquete SCORM 1.2
+  Estructura del proyecto:
+    css/       estilos (base, estructura, componentes, pantallas, certificado)
+    js/        lógica (config, audio, sincronización, progreso, navegación, SCORM…)
+    content/   textos, guiones de audio y preguntas, por sección
+    assets/    fuentes, imágenes, ilustraciones y audios (assets/audio)
+-->
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/sections.css">
+<link rel="stylesheet" href="css/certificate.css">
+</head>
+<body>
+<div class="app">
+  <div class="cprog" role="progressbar" aria-label="Progreso de la capacitación"><i id="cprogFill"></i></div>
+
+  <!-- Encabezado: [☰] | Autoformación · Código de Ética y Conducta | secciones -->
+  <nav class="topmenu" aria-label="Navegación del curso">
+    <button type="button" class="tocbtn" id="tocBtn" aria-controls="tocDrawer" aria-expanded="false" aria-label="Abrir tabla de contenido">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <div class="brandmini"><small>Autoformación</small><b>Código de Ética y Conducta</b></div>
+    <div class="mitems" id="mitems"></div>
+  </nav>
+  <div class="band" id="band"></div>
+
+  <!-- Pantallas (las genera js/navigation.js a partir de content/) -->
+  <main class="stage" id="stage"></main>
+
+  <!-- Reproductor y navegación -->
+  <div class="bottom">
+    <div class="transcript" id="transcript" aria-live="off"><span class="tl">Transcripción</span><span id="transcriptText"></span></div>
+    <div class="player" id="player">
+      <button type="button" class="pbtn" id="playBtn" aria-label="Reproducir" disabled></button>
+      <span class="lockbadge" id="lockBadge" title="La primera vez debes escuchar el audio completo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>1.ª vez</span>
+      <span class="time" id="tCur">0:00</span>
+      <div class="seek" id="seek" role="progressbar" aria-label="Avance del audio"><i id="seekFill"></i><span class="knob" id="knob"></span></div>
+      <span class="time" id="tTot">0:00</span>
+      <span class="srcbadge" id="srcBadge" title="Origen del audio"></span>
+      <div class="vol-wrap"><button type="button" class="volbtn" id="volBtn" aria-label="Volumen"></button><input type="range" class="vol" id="vol" min="0" max="100" value="100" aria-label="Volumen"></div>
+      <button type="button" class="ccbtn" id="ccBtn" aria-pressed="false" aria-label="Subtítulos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 10.5a2 2 0 1 0 0 3M17 10.5a2 2 0 1 0 0 3"/></svg> CC</button>
+    </div>
+    <div class="navrow">
+      <span class="left" id="sceneLabel"></span>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span class="hint" id="hint" aria-live="polite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span id="hintTxt"></span></span>
+        <button type="button" class="btn ghost" id="prevBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m15 18-6-6 6-6"/></svg> Anterior</button>
+        <button type="button" class="btn primary" id="nextBtn">Siguiente</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Panel lateral: tabla de contenido -->
+<aside class="drawer" id="tocDrawer" aria-label="Tabla de contenido">
+  <div class="dhead"><div><h2>Contenido</h2><small id="tocPct"></small></div><button type="button" class="dclose" id="tocClose" aria-label="Cerrar tabla de contenido"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+  <div class="dprog"><i id="tocBar"></i></div>
+  <div class="dlegend"><span><i style="background:var(--good)"></i>Completado</span><span><i style="background:var(--navy)"></i>En curso</span><span><i style="border:2px dashed var(--navy)"></i>Siguiente</span><span><i style="background:#d3dbe7"></i>Bloqueado</span></div>
+  <div class="dbody" id="tocList" data-toc="panel"></div>
+</aside>
+<div class="drawer-bg" id="tocBg"></div>
+
+<!-- Ventana: reanudar -->
+<div class="modal" id="resumeModal" role="dialog" aria-modal="true" aria-labelledby="resumeTitle"><div class="mbox">
+  <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 15.5-6.3L21 8M21 3v5h-5"/></svg></span>
+  <h3 id="resumeTitle">¡Hola de nuevo!</h3><p id="resumeTxt"></p>
+  <div class="mbtns"><button type="button" class="btn ghost" id="resumeNo">Ir al inicio</button><button type="button" class="btn primary" id="resumeYes">Continuar donde lo dejé</button></div>
+</div></div>
+
+<!-- Ventana: fin -->
+<div class="modal" id="endModal" role="dialog" aria-modal="true" aria-labelledby="endTitle"><div class="mbox">
+  <span class="mi" style="background:var(--good-soft);color:var(--good)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span>
+  <h3 id="endTitle">Capacitación finalizada</h3><p>Tu avance quedó registrado. Ya puedes cerrar esta ventana.</p>
+  <div class="mbtns"><button type="button" class="btn ghost" onclick="modal('endModal',false)">Volver al curso</button></div>
+</div></div>
+
+<!-- Ventana: certificado (misma plantilla que Chamilo) -->
+<div class="modal" id="certModal" role="dialog" aria-modal="true" aria-label="Certificado"><div class="certwrap">
+  <div class="cert"><div class="cin">
+    <div class="c-title">CERTIFICADO DE PARTICIPACIÓN</div>
+    <div class="c-pre">POR MEDIO DE LA PRESENTE SE RECONOCE A</div>
+    <div class="c-name" id="certName"></div>
+    <div class="c-desc">por haber completado satisfactoriamente la capacitación<br><strong id="certCourse"></strong></div>
+    <div class="c-date">Fecha de finalización: <span id="certDate"></span></div>
+  </div></div>
+  <div class="certbtns"><span class="certnote" id="certNote"></span><button type="button" class="btn ghost" onclick="modal('certModal',false)">Cerrar</button><button type="button" class="btn good" onclick="window.print()">Imprimir / Guardar PDF</button></div>
+</div></div>
+
+<!-- 1. Configuración -->
+<script src="js/config.js"></script>
+<script src="js/sync-times.js"></script>
+<!-- 2. Utilidades y componentes -->
+<script src="js/icons.js"></script>
+<script src="js/components.js"></script>
+<!-- 3. Servicios: LMS, audio, sincronización, progreso -->
+<script src="js/scorm.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/sync.js"></script>
+<script src="js/progress.js"></script>
+<!-- 4. Interacciones por tipo de pantalla -->
+<script src="js/interactions.js"></script>
+<script src="js/principles.js"></script>
+<script src="js/values.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/resources.js"></script>
+<!-- 5. Contenido del curso (en orden de pantallas) -->
+<script src="content/preguntas.js"></script>
+<script src="content/01-inicio.js"></script>
+<script src="content/02-introduccion.js"></script>
+<script src="content/03-codigo.js"></script>
+<script src="content/04-cierre.js"></script>
+<script src="content/05-evaluacion.js"></script>
+<!-- 6. Navegación, tabla de contenido e inicio -->
+<script src="js/toc.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

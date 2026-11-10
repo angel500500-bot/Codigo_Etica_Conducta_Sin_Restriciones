@@ -1,0 +1,58 @@
+/* ============================================================
+   BASE: fuentes locales, variables de diseño, tipografía
+   Todos los colores y medidas comunes se definen aquí.
+   ============================================================ */
+@font-face{font-family:"Manrope";font-weight:400;font-display:swap;src:url(../assets/fonts/manrope-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Manrope";font-weight:500;font-display:swap;src:url(../assets/fonts/manrope-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Manrope";font-weight:600;font-display:swap;src:url(../assets/fonts/manrope-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Manrope";font-weight:700;font-display:swap;src:url(../assets/fonts/manrope-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Manrope";font-weight:800;font-display:swap;src:url(../assets/fonts/manrope-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:"Fraunces";font-weight:500;font-display:swap;src:url(../assets/fonts/fraunces-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Fraunces";font-weight:600;font-display:swap;src:url(../assets/fonts/fraunces-latin-600-normal.woff2) format("woff2")}
+
+:root{
+  /* Neutros */
+  --ink:#1F2937;--muted:#5B6573;--line:#E2E8F0;--paper:#F1F4F8;--card:#fff;
+  /* Marca (tomados del PPT) */
+  --navy:#033985;--sky:#008FD7;--teal:#0F7C8C;
+  /* Color de la sección activa (lo cambia navigation.js) */
+  --theme:#008FD7;--theme-soft:#EAF3FB;
+  /* Estados */
+  --good:#1B7F47;--good-soft:#E6F4EC;--bad:#B42318;--bad-soft:#FBEAEA;--warn:#B86E00;--warn-soft:#FDF3E1;
+  /* Forma */
+  --shadow:0 16px 44px -22px rgba(3,30,70,.32);--r:18px;--r-sm:14px;
+  /* Íconos de los bloques de contenido */
+  --ic-box:46px;--ic-svg:24px;
+  /* Tipografías */
+  --sans:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;overflow:hidden}
+button{font-family:inherit}
+img{max-width:100%}
+:focus-visible{outline:3px solid color-mix(in srgb,var(--theme) 70%,#fff);outline-offset:2px}
+[tabindex="-1"]:focus{outline:none}
+
+/* Títulos y textos comunes a todas las pantallas */
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--theme);background:var(--theme-soft);padding:7px 13px;border-radius:99px;margin-bottom:12px}
+.kicker svg{width:14px;height:14px}
+h1.t{font-family:var(--display);font-weight:600;font-size:clamp(30px,4vw,52px);line-height:1.04;margin:.08em 0;letter-spacing:-.01em}
+h2.t{font-family:var(--display);font-weight:600;font-size:clamp(23px,2.7vw,33px);line-height:1.12;margin:.05em 0;color:var(--ink)}
+.tbar{width:60px;height:5px;border-radius:99px;background:var(--theme);margin:10px 0 14px}
+.lead{font-size:clamp(15px,1.5vw,17.5px);color:var(--muted);line-height:1.6;margin:0 0 16px;max-width:75ch}
+.lead b{color:var(--ink)}
+p{margin:0}
+.lbl{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.lbl.no{color:var(--bad)}.lbl.ok{color:var(--good)}
+
+/* Distribuciones */
+.split{display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(16px,2.4vw,28px);align-items:start}
+.split.even{grid-template-columns:1fr 1fr}
+.grid{display:grid;gap:clamp(10px,1.2vw,14px)}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g5{grid-template-columns:repeat(5,1fr)}.g6{grid-template-columns:repeat(6,1fr)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
